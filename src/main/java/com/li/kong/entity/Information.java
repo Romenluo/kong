@@ -1,11 +1,12 @@
 package com.li.kong.entity;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
  * 实时资讯实体类
  */
-public class Information {
+public class Information implements Serializable {
     private Integer id;
     private String title;
     private String content;

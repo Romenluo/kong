@@ -6,6 +6,6 @@
 
 <mapper namespace="com.li.kong.mapper.UserMapper">
     <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="User">
-        INSERT INTO t_user (email,pass,pet_name,register_date) VALUES (#{email},#{pass},#{petName},#{registerDate})
+        INSERT INTO t_user (email,password,pet_name,qq,forbidden,role_id) VALUES (#{email},#{password},#{petName},#{qq},#{forbidden},#{role.id})
     </insert>
 </mapper>

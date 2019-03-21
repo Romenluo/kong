@@ -1,8 +1,12 @@
 package com.li.kong.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Role {
+/**
+ * 角色实例
+ */
+public class Role implements Serializable {
     private Integer id;
     private String name;
     private List<User> user; //一对多，当前类型对应的用户

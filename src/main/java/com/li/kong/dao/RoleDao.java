@@ -1,14 +1,14 @@
 package com.li.kong.dao;
 
-import com.li.kong.entity.User;
+import com.li.kong.entity.Role;
 import com.li.kong.exception.DaoException;
 
 import java.util.List;
 
-public class UserDao implements Dao<User,Integer> {
+public class RoleDao implements Dao<Role,Integer> {
 
     @Override
-    public Integer save(User o) throws DaoException {
+    public Integer save(Role o) throws DaoException {
         return null;
     }
 
@@ -18,27 +18,27 @@ public class UserDao implements Dao<User,Integer> {
     }
 
     @Override
-    public boolean update(User user) throws DaoException {
+    public boolean update(Role role) throws DaoException {
         return false;
     }
 
     @Override
-    public User find(Integer id) throws DaoException {
+    public Role find(Integer id) throws DaoException {
         return null;
     }
 
     @Override
-    public User load(User user) throws DaoException {
+    public Role load(Role role) throws DaoException {
         return null;
     }
 
     @Override
-    public List<User> loadList(User user) throws DaoException {
+    public List<Role> loadList(Role role) throws DaoException {
         return null;
     }
 
     @Override
-    public List<User> findAll() throws DaoException {
+    public List<Role> findAll() throws DaoException {
         return null;
     }
 }

@@ -1,9 +1,11 @@
 package com.li.kong.entity;
 
+import java.io.Serializable;
+
 /**
  * 图片实体类
  */
-public class Photos {
+public class Photos implements Serializable {
     private Integer id;
     private String title;
     private String imageUrl;//图片路径

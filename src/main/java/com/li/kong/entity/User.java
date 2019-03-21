@@ -1,10 +1,13 @@
 package com.li.kong.entity;
 
 
-import java.util.Date;
+import java.io.Serializable;
 import java.util.List;
 
-public class User {
+/**
+ * 用户实例
+ */
+public class User implements Serializable {
     private Integer id;
     private String email;
     private String password;

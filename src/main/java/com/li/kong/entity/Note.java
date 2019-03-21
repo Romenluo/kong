@@ -1,11 +1,12 @@
 package com.li.kong.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 地方特色介绍实体类
  */
-public class Note {
+public class Note implements Serializable {
     private Integer id;
     private String title;
     private String content;

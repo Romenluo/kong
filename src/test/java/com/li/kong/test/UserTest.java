@@ -1,5 +1,6 @@
 package com.li.kong.test;
 
+import com.li.kong.entity.Role;
 import com.li.kong.entity.User;
 import com.li.kong.mapper.UserMapper;
 import com.li.kong.utils.DataSource;
@@ -41,13 +42,15 @@ public class UserTest {
     void saveTest() throws IOException{
         session = new DataSource().init();
         UserMapper mapper = session.getMapper(UserMapper.class);
+        Role role = new Role();
+        role.setId(2);
         User user = new User();
-        user.setId(1);
-        user.setEmail("lllllllllllttst@luo.com");
-        user.setPass("123456789");
-        user.setPetName("wenwen");
-        user.setRegisterDate(new Date());
+        user.setEmail("test@luo.com");
+        user.setPassword("123456789");
+        user.setPetName("门");
+        user.setQq("123456789");
         user.setForbidden("N");
+        user.setRole(role);
         int count = mapper.save(user);
         session.commit();
         System.out.println(count);

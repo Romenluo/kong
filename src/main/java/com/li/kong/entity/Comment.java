@@ -1,6 +1,11 @@
 package com.li.kong.entity;
 
-public class Comment {
+import java.io.Serializable;
+
+/**
+ * 评论实例
+ */
+public class Comment implements Serializable {
     private Integer id;
     private String content;
     private User user;//一对一。一条评论由一个用户发表

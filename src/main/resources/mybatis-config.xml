@@ -15,7 +15,7 @@
 
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://localhost:3306/men?useUnicode=true&amp;characterEncoding=UTF8"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/kong?useUnicode=true&amp;characterEncoding=UTF8"/>
                 <property name="username" value="root"/>
                 <property name="password" value=""/>
             </dataSource>
@@ -25,7 +25,8 @@
     </environments>
 
     <mappers>
-        <mapper resource="com/li/kong/mapper/UserMapper.xml"/>
+        <package name="com.li.kong.mapper" />
+        <!--<mapper resource="com/li/kong/mapper/UserMapper.xml"/>-->
     </mappers>
 
 </configuration>
