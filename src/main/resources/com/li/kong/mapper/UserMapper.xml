@@ -8,7 +8,7 @@
     <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="User">
         INSERT INTO t_user (email,password,pet_name,qq,forbidden,role_id) VALUES (#{email},#{password},#{petName},#{qq},#{forbidden},#{role.id})
     </insert>
-    <select id="list" resultType="User">
-        SELECT id , email , password ,pet_name AS petName, qq , forbidden FROM t_customers
+    <select id="loadEmail" resultType="User" parameterType="String">
+        SELECT id , email , password ,pet_name AS petName, qq , forbidden FROM t_user WHERE email=#{email}
     </select>
 </mapper>
