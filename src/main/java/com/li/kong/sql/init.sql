@@ -42,13 +42,13 @@ CREATE TABLE t_category(
   name VARCHAR(150) COMMENT '类型名称'
 );
 
-INSERT INTO t_category VALUES(1,'历史文化');
+INSERT INTO t_category VALUES(1,'旅游景点');
 INSERT INTO t_category VALUES(2,'风味小吃');
-INSERT INTO t_category VALUES(3,'旅游景点');
-INSERT INTO t_category VALUES(4,'古茶产品');
-INSERT INTO t_category VALUES(5,'民族风情');
-INSERT INTO t_category VALUES(6,'本地特产');
-INSERT INTO t_category VALUES(7,'古茶文化');
+INSERT INTO t_category VALUES(3,'民族风情');
+INSERT INTO t_category VALUES(4,'历史文化');
+INSERT INTO t_category VALUES(5,'古茶产品');
+INSERT INTO t_category VALUES(6,'古茶文化');
+INSERT INTO t_category VALUES(7,'本地特产');
 
 -- 4
 DROP TABLE IF EXISTS t_note;

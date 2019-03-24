@@ -32,6 +32,17 @@ public class UserDao implements Dao<User,Integer> {
         return null;
     }
 
+    /**
+     * 根据邮箱查询
+     * @param email 用户邮箱
+     * @return 返回用户信息
+     * @throws DaoException
+     */
+    public User loadEmail(String email) throws DaoException{
+        User user = new User();
+        return user;
+    }
+
     @Override
     public List<User> loadList(User user) throws DaoException {
         return null;
