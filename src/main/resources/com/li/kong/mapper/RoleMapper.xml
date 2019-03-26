@@ -5,6 +5,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.li.kong.mapper.RoleMapper">
-    <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="Role">
-    </insert>
+    <select id="find" resultType="Role" parameterType="String">
+        SELECT id , name FROM t_role WHERE name=#{name}
+    </select>
+    <select id="findId" resultType="Role" parameterType="int">
+        SELECT id , name FROM t_role WHERE id=#{id}
+    </select>
 </mapper>

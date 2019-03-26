@@ -14,6 +14,7 @@ public class User implements Serializable {
     private String petName;
     private String qq;
     private String forbidden;
+    private Integer roleId;
     private Role role;//一对一，当前用户的类型
     private List<Comment> commentList;//一对多，一个用户有多条评论
     public Integer getId() {
@@ -78,5 +79,13 @@ public class User implements Serializable {
 
     public void setCommentList(List<Comment> commentList) {
         this.commentList = commentList;
+    }
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 }

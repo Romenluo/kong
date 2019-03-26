@@ -9,6 +9,6 @@
         INSERT INTO t_user (email,password,pet_name,qq,forbidden,role_id) VALUES (#{email},#{password},#{petName},#{qq},#{forbidden},#{role.id})
     </insert>
     <select id="loadEmail" resultType="User" parameterType="String">
-        SELECT id , email , password ,pet_name AS petName, qq , forbidden FROM t_user WHERE email=#{email}
+        SELECT id , email , password ,pet_name AS petName, qq , forbidden,role_id AS roleId FROM t_user WHERE email=#{email}
     </select>
 </mapper>

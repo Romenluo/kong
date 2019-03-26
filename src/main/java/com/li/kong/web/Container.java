@@ -1,7 +1,13 @@
 package com.li.kong.web;
 
 import com.alibaba.fastjson.JSONObject;
+import com.li.kong.entity.Message;
+import com.li.kong.entity.Role;
 import com.li.kong.entity.User;
+import com.li.kong.service.RoleService;
+import com.li.kong.service.UserService;
+import com.li.kong.utils.MessageDigestType;
+import com.li.kong.utils.StringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.mail.SimpleMailMessage;
@@ -20,6 +26,8 @@ public class Container {
     @Autowired
     private JavaMailSender mailSender;
 
+    private RoleService rs = new RoleService();
+    private UserService us = new UserService();
     private HttpSession session;
     @RequestMapping("/") String home() {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -30,14 +38,6 @@ public class Container {
 
         mailSender.send(message);
         return"你好，世界!";
-    }
-    public @RequestMapping("signIn")
-    User signIn(){
-        User user = new User();
-        user.setId(1);
-        user.setEmail("123456@qq.com");
-        user.setQq("123456789");
-        return user;
     }
 
     /**
@@ -52,10 +52,86 @@ public class Container {
         session.setAttribute("code",code);
         return code;
     }
-    public @RequestMapping("signUp") String signUp(@RequestBody JSONObject json,HttpServletRequest request){
+
+    /**
+     * 注册，点击注册时发送数据到后台，进行判断，然后存储
+     * @param json
+     * @param request
+     * @return
+     */
+    public @RequestMapping("signUp") Message signUp(@RequestBody JSONObject json,HttpServletRequest request){
         session = request.getSession();
         String code = (String)session.getAttribute("code");
-        System.out.println(code);
-        return "success";
+        String email = (String)json.get("username");
+        String password = (String)json.get("pass");
+        String petName = (String)json.get("petName");
+        String pageCode = (String)json.get("pageCode");
+
+        Message message = new Message();
+        if(!pageCode.equals(code)){
+            message.setCases("-1");
+            message.setMsg("验证码不正确");
+            return message;
+        }else {
+            User userload = us.loadEmail(email);
+            if(userload!=null){
+                message.setCases("-2");
+                message.setMsg("用户已经存在");
+                return message;
+            }else {
+                User user = new User();
+                user.setEmail(email);
+                user.setPassword(password);
+                user.setPetName(petName);
+                Role role = new Role();
+                role.setId(2);
+                user.setRole(role);
+                us.save(user);
+                message.setCases("1");
+                message.setMsg("注册成功");
+                return message;
+            }
+        }
+    }
+
+    /**
+     * 登录，根据用户邮箱登录，并判断是否为管理员
+     * @return
+     */
+    public @RequestMapping("signIn") Message signIn(@RequestBody JSONObject json,HttpServletRequest request){
+        session = request.getSession();
+
+        String email = (String)json.get("username");
+        String password = (String)json.get("password");
+        Message msg = new Message();
+
+        User user = us.loadEmail(email);
+        if(user==null){
+            msg.setMsg("该用户不存在");
+            msg.setCases("-1");
+            return msg;
+        }else {
+
+            Role role = rs.findId(user.getRoleId());
+
+            if(role==null){
+                msg.setMsg("该用户不存在");
+                msg.setCases("-1");
+                return msg;
+            }else {
+                String pass = StringHelper.encrypt( password , MessageDigestType.MD5, null );
+                if(pass.equals(user.getPassword())){
+                    user.setRole(role);
+                    msg.setMsg("登录成功");
+                    msg.setUser(user);
+                    msg.setCases("1");
+                    return msg;
+                }else {
+                    msg.setMsg("密码不正确");
+                    msg.setCases("-1");
+                    return msg;
+                }
+            }
+        }
     }
 }

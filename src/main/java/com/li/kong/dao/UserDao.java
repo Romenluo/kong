@@ -2,14 +2,29 @@ package com.li.kong.dao;
 
 import com.li.kong.entity.User;
 import com.li.kong.exception.DaoException;
+import com.li.kong.mapper.UserMapper;
+import com.li.kong.utils.DataSource;
+import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
 public class UserDao implements Dao<User,Integer> {
 
+    private SqlSession session ;
+    UserMapper mapper;
     @Override
-    public Integer save(User o) throws DaoException {
-        return null;
+    public Integer save(User o) throws DaoException{
+        int count;
+        try{
+            session = new DataSource().init();
+            mapper = session.getMapper(UserMapper.class);
+            count = mapper.save(o);
+            session.commit();
+        }catch (Exception e){
+            throw new RuntimeException();
+        }
+        session.close();
+        return count;
     }
 
     @Override
@@ -39,7 +54,15 @@ public class UserDao implements Dao<User,Integer> {
      * @throws DaoException
      */
     public User loadEmail(String email) throws DaoException{
-        User user = new User();
+        User user;
+        try{
+            session = new DataSource().init();
+            mapper = session.getMapper(UserMapper.class);
+            user = mapper.loadEmail(email);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        session.close();
         return user;
     }
 

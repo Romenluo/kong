@@ -43,9 +43,9 @@ public class UserTest {
         session = new DataSource().init();
         UserMapper mapper = session.getMapper(UserMapper.class);
         Role role = new Role();
-        role.setId(2);
+        role.setId(1);
         User user = new User();
-        user.setEmail("test@luo.com");
+        user.setEmail("test11@luo.com");
         user.setPassword("123456789");
         user.setPetName("门");
         user.setQq("123456789");
