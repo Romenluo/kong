@@ -2,6 +2,7 @@ package com.li.kong.service;
 
 import com.li.kong.dao.UserDao;
 import com.li.kong.entity.User;
+import com.li.kong.exception.DaoException;
 import com.li.kong.utils.MessageDigestType;
 import com.li.kong.utils.StringHelper;
 
@@ -35,6 +36,19 @@ public class UserService {
             return userDao.loadEmail(email);
         }catch (Exception e){
             return null;
+        }
+    }
+
+    public boolean updateInfo(User user){
+         User user1;
+        try{
+            user1 = userDao.loadEmail(user.getEmail());
+            user1.setPetName(user.getPetName());
+            user1.setQq(user.getQq());
+            userDao.update(user1);
+            return true;
+        }catch (Exception e){
+            throw new DaoException("更新失败"+e);
         }
     }
 }

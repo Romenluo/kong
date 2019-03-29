@@ -11,4 +11,18 @@
     <select id="loadEmail" resultType="User" parameterType="String">
         SELECT id , email , password ,pet_name AS petName, qq , forbidden,role_id AS roleId FROM t_user WHERE email=#{email}
     </select>
+    <update id="updateInfo" parameterType="User">
+        UPDATE t_user
+        <set>
+            <if test="petName != null and petName != ''">
+                pet_name = #{petName} ,
+            </if>
+            <if test="qq != null and qq != ''">
+                qq = #{qq} ,
+            </if>
+            <trim suffixOverrides="," />
+        </set>
+        WHERE email = #{email}
+    </update>
+
 </mapper>

@@ -45,8 +45,8 @@ public class UserTest {
         Role role = new Role();
         role.setId(1);
         User user = new User();
-        user.setEmail("test11@luo.com");
-        user.setPassword("123456789");
+        user.setEmail("kong@li.com");
+        user.setPassword("123456");
         user.setPetName("门");
         user.setQq("123456789");
         user.setForbidden("N");
@@ -54,7 +54,6 @@ public class UserTest {
         int count = mapper.save(user);
         session.commit();
         System.out.println(count);
-
     }
     public @After
     void destory(){

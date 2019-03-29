@@ -19,10 +19,10 @@ public class UserDao implements Dao<User,Integer> {
             session = new DataSource().init();
             mapper = session.getMapper(UserMapper.class);
             count = mapper.save(o);
-            session.commit();
         }catch (Exception e){
             throw new RuntimeException();
         }
+        session.rollback();
         session.close();
         return count;
     }
@@ -34,7 +34,22 @@ public class UserDao implements Dao<User,Integer> {
 
     @Override
     public boolean update(User user) throws DaoException {
-        return false;
+        int count;
+        try{
+            session = new DataSource().init();
+            mapper = session.getMapper(UserMapper.class);
+            count = mapper.updateInfo(user);
+            session.commit();
+        }catch (Exception e){
+            session.rollback();
+            throw new RuntimeException(e);
+        }
+        session.close();
+        if(count>=1){
+           return true;
+        }else {
+            return false;
+        }
     }
 
     @Override

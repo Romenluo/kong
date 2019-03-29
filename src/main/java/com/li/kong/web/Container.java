@@ -121,6 +121,7 @@ public class Container {
             }else {
                 String pass = StringHelper.encrypt( password , MessageDigestType.MD5, null );
                 if(pass.equals(user.getPassword())){
+                    session.setAttribute("user",user);
                     user.setRole(role);
                     msg.setMsg("登录成功");
                     msg.setUser(user);
@@ -133,5 +134,59 @@ public class Container {
                 }
             }
         }
+    }
+
+    /**
+     * 退出登录
+     * @param request
+     * @return
+     */
+    public @RequestMapping("logout") Message logout(HttpServletRequest request){
+        session = request.getSession();
+        session.removeAttribute("user");
+        Message message = new Message();
+        message.setCases("-1");
+        message.setMsg("退出登录");
+        User user = (User)session.getAttribute("user");
+        message.setUser(user);
+        return message;
+    }
+
+    /**
+     * 更新用户信息
+     * @param json 前端传递过来的数据
+     * @param request
+     * @return
+     */
+    public @RequestMapping("updateInfo") Message updateInfo(@RequestBody JSONObject json,HttpServletRequest request){
+        session = request.getSession();
+        User usersess = (User)session.getAttribute("user");
+        Message message = new Message();
+        String email = (String)json.get("email");
+        String petName= (String)json.get("petName");
+        String qq = (String)json.get("qq");
+        int roleId = usersess.getRoleId();
+
+        User user = new User();
+        user.setEmail(email);
+        user.setPetName(petName);
+        user.setRoleId(roleId);
+        user.setQq(qq);
+        Role role = rs.findId(user.getRoleId());
+        try{
+            us.updateInfo(user);
+            User user1 = us.loadEmail(email);
+            user1.setRole(role);
+            message.setCases("1");
+            message.setMsg("更新成功");
+            message.setUser(user1);
+        }catch (Exception e){
+            User user1 = us.loadEmail(email);
+            user1.setRole(role);
+            message.setCases("1");
+            message.setMsg("更新失败");
+            message.setUser(user1);
+        }
+        return message;
     }
 }
