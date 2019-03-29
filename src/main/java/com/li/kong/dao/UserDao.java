@@ -52,6 +52,31 @@ public class UserDao implements Dao<User,Integer> {
         }
     }
 
+    /**
+     * 修改密码
+     * @param user
+     * @return
+     * @throws DaoException
+     */
+    public boolean updatePassword(User user) throws DaoException {
+        int count;
+        try{
+            session = new DataSource().init();
+            mapper = session.getMapper(UserMapper.class);
+            count = mapper.updatePassword(user);
+            session.commit();
+        }catch (Exception e){
+            session.rollback();
+            throw new RuntimeException(e);
+        }
+        session.close();
+        if(count>=1){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
     @Override
     public User find(Integer id) throws DaoException {
         return null;

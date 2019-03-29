@@ -51,4 +51,21 @@ public class UserService {
             throw new DaoException("更新失败"+e);
         }
     }
+
+    /**
+     * 修改密码
+     * @param user 用户对象
+     * @return
+     */
+    public boolean updatePassword(User user){
+        User user1;
+        try{
+            user1 = userDao.loadEmail(user.getEmail());
+            user1.setPassword(user.getPassword());
+            userDao.updatePassword(user1);
+            return true;
+        }catch (Exception e){
+            throw new DaoException("更新失败"+e);
+        }
+    }
 }

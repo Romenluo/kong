@@ -6,4 +6,5 @@ public interface UserMapper {
     int save(User user);
     User loadEmail(String email);
     int updateInfo(User user);
+    int updatePassword(User user);
 }

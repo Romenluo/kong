@@ -44,13 +44,21 @@ public class Container {
      * 获取验证码，返回提示消息
      * @return
      */
-
-    public @RequestMapping("verificationCode") String verification(@RequestBody JSONObject json,HttpServletRequest request){
+    public @RequestMapping("verificationCode") Message verification(@RequestBody JSONObject json,HttpServletRequest request){
         session = request.getSession();
         String code = (int)(Math.random()*1000000)+"";
-        String username = (String)json.get("userName");
+        String email = (String)json.get("userName");
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("1689488576@qq.com");
+        message.setTo(email);
+        message.setSubject("kong给你发的验证码");
+        message.setText("验证码："+code);
+
+        mailSender.send(message);
         session.setAttribute("code",code);
-        return code;
+        Message msg = new Message();
+        msg.setMsg("验证码发送成功");
+        return msg;
     }
 
     /**
@@ -166,7 +174,6 @@ public class Container {
         String petName= (String)json.get("petName");
         String qq = (String)json.get("qq");
         int roleId = usersess.getRoleId();
-
         User user = new User();
         user.setEmail(email);
         user.setPetName(petName);
@@ -187,6 +194,30 @@ public class Container {
             message.setMsg("更新失败");
             message.setUser(user1);
         }
+        return message;
+    }
+
+    public @RequestMapping("updatePassword") Message updatePassword(@RequestBody JSONObject json,HttpServletRequest request){
+        session = request.getSession();
+
+        Message message = new Message();
+        String email = (String)json.get("email");
+        String password = (String)json.get("password");
+
+        /*User user = new User();
+        try{
+            us.updatePassword(user);
+            User user1 = us.loadEmail(email);
+
+            message.setCases("1");
+            message.setMsg("更新成功");
+            message.setUser(user1);
+        }catch (Exception e){
+            User user1 = us.loadEmail(email);
+            message.setCases("1");
+            message.setMsg("更新失败");
+            message.setUser(user1);
+        }*/
         return message;
     }
 }

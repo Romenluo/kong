@@ -24,5 +24,15 @@
         </set>
         WHERE email = #{email}
     </update>
+    <update id="updatePassword" parameterType="User">
+        UPDATE t_user
+        <set>
+            <if test="password != null and password != ''">
+                password = #{password} ,
+            </if>
+            <trim suffixOverrides="," />
+        </set>
+        WHERE email = #{email}
+    </update>
 
 </mapper>
