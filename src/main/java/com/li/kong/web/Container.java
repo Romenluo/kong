@@ -58,6 +58,7 @@ public class Container {
         session.setAttribute("code",code);
         Message msg = new Message();
         msg.setMsg("验证码发送成功");
+        msg.setCases(code);
         return msg;
     }
 
