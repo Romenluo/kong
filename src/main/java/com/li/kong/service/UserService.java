@@ -22,7 +22,8 @@ public class UserService {
             userDao.save(user);
             return true;
         }catch (Exception e){
-            throw new DaoException(""+e);
+//            throw new DaoException(""+e);
+            return false;
         }
     }
 
