@@ -198,27 +198,71 @@ public class Container {
         return message;
     }
 
+    /**
+     * 修改密码
+     * @param json
+     * @param request
+     * @return
+     */
     public @RequestMapping("updatePassword") Message updatePassword(@RequestBody JSONObject json,HttpServletRequest request){
         session = request.getSession();
 
         Message message = new Message();
         String email = (String)json.get("email");
-        String password = (String)json.get("password");
+        String oldPassword = (String)json.get("oldPassword");
+        String newPassword = (String)json.get("newPassword");
+        String code = (String)json.get("code");
+        String codeSession = (String)session.getAttribute("code");
+        User user1 = us.loadEmail(email);
+        String pass = StringHelper.encrypt( oldPassword , MessageDigestType.MD5, null );
+        if(pass.equals(user1.getPassword())){
+            if(code.equals(codeSession)){
+                try{
+                    user1.setPassword(newPassword);
+                    us.updatePassword(user1);
+                    message.setCases("1");
+                    message.setMsg("密码修改成功");
+                    message.setUser(user1);
+                    return message;
+                }catch (Exception e){
+                    message.setCases("1");
+                    message.setMsg("密码修改失败");
+                    message.setUser(user1);
+                    return  message;
+                }
+            }else {
+                message.setCases("-2");
+                message.setMsg("验证码不正确");
+                return message;
+            }
+        }else {
+            message.setCases("-1");
+            message.setMsg("旧密码不正确");
+            return message;
+        }
+    }
 
-        /*User user = new User();
-        try{
-            us.updatePassword(user);
-            User user1 = us.loadEmail(email);
-
-            message.setCases("1");
-            message.setMsg("更新成功");
-            message.setUser(user1);
-        }catch (Exception e){
-            User user1 = us.loadEmail(email);
-            message.setCases("1");
-            message.setMsg("更新失败");
-            message.setUser(user1);
-        }*/
-        return message;
+    /**
+     * 检查旧密码是否正确
+     * @param json
+     * @param request
+     * @return
+     */
+    public @RequestMapping("verificationOldPassword") Message verificationOldPassword(@RequestBody JSONObject json,HttpServletRequest request){
+        session = request.getSession();
+        Message message = new Message();
+        String email = (String)json.get("email");
+        String oldPassword = (String)json.get("oldPassword");
+        User user = us.loadEmail(email);
+        String pass = StringHelper.encrypt( oldPassword , MessageDigestType.MD5, null );
+        if(pass.equals(user.getPassword())){
+          message.setCases("1");
+          message.setMsg("密码输入正确");
+          return message;
+        }else {
+            message.setCases("-1");
+            message.setMsg("输入密码不正确");
+            return message;
+        }
     }
 }

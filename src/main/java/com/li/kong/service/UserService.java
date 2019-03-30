@@ -61,7 +61,8 @@ public class UserService {
         User user1;
         try{
             user1 = userDao.loadEmail(user.getEmail());
-            user1.setPassword(user.getPassword());
+            String pass = StringHelper.encrypt( user.getPassword() , MessageDigestType.MD5, null );
+            user1.setPassword(pass);
             userDao.updatePassword(user1);
             return true;
         }catch (Exception e){
