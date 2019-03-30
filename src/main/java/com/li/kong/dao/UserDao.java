@@ -19,10 +19,11 @@ public class UserDao implements Dao<User,Integer> {
             session = new DataSource().init();
             mapper = session.getMapper(UserMapper.class);
             count = mapper.save(o);
+            session.commit();
         }catch (Exception e){
+            session.rollback();
             throw new RuntimeException();
         }
-        session.rollback();
         session.close();
         return count;
     }
