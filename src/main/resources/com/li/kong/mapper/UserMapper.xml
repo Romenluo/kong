@@ -34,5 +34,18 @@
         </set>
         WHERE email = #{email}
     </update>
+    <update id="updateForbidden" parameterType="User">
+        UPDATE t_user
+        <set>
+            <if test="forbidden != null and forbidden != ''">
+                forbidden = #{forbidden} ,
+            </if>
+            <trim suffixOverrides="," />
+        </set>
+        WHERE email = #{email}
+    </update>
+    <select id="listUser" resultType="User" >
+        select id,email , password ,pet_name AS petName, qq , forbidden,role_id AS roleId FROM t_user
+    </select>
 
 </mapper>

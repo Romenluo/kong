@@ -7,6 +7,8 @@ import com.li.kong.utils.MessageDigestType;
 import com.li.kong.utils.StringHelper;
 import org.junit.Test;
 
+import java.util.List;
+
 public class UserTestInit {
     public @Test
     void saveTest(){
@@ -53,6 +55,27 @@ public class UserTestInit {
         user.setPassword(pass);
         Boolean bb = us.updatePassword(user);
         System.out.println(bb);
+    }
+
+    public @Test
+    void updateForbidden(){
+        UserService us = new UserService();
+        User user = new User();
+        user.setEmail("1689488576@qq.com");
+        String forbidden = "Y";
+        user.setForbidden(forbidden);
+        Boolean bb = us.updateForbidden(user);
+        System.out.println(bb);
+    }
+
+    public @Test
+    void findAll(){
+        UserService us = new UserService();
+        List<User> list = us.findAll();
+        for(int i = 0;i<list.size();i++){
+            System.out.println(list.get(i).getPetName());
+        }
+
     }
 
 }

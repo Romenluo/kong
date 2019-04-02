@@ -78,6 +78,31 @@ public class UserDao implements Dao<User,Integer> {
         }
     }
 
+    /**
+     * 修改用户状态，是否被禁用
+     * @param user
+     * @return
+     * @throws DaoException
+     */
+    public boolean updateForbidden(User user) throws DaoException {
+        int count;
+        try{
+            session = new DataSource().init();
+            mapper = session.getMapper(UserMapper.class);
+            count = mapper.updateForbidden(user);
+            session.commit();
+        }catch (Exception e){
+            session.rollback();
+            throw new RuntimeException(e);
+        }
+        session.close();
+        if(count>=1){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
     @Override
     public User find(Integer id) throws DaoException {
         return null;
@@ -114,6 +139,16 @@ public class UserDao implements Dao<User,Integer> {
 
     @Override
     public List<User> findAll() throws DaoException {
-        return null;
+        List<User> list;
+        try{
+            session = new DataSource().init();
+            mapper = session.getMapper(UserMapper.class);
+            list = mapper.listUser();
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        session.close();
+
+        return list;
     }
 }
