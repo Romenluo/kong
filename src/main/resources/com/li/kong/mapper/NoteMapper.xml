@@ -5,6 +5,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.li.kong.mapper.NoteMapper">
-    <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="Role">
+    <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="Note">
+      INSERT INTO t_note (title,content,up_vote,down_vote,category_id) VALUES (#{title},#{content},#{upVote},#{downVote},#{category.id})
     </insert>
 </mapper>

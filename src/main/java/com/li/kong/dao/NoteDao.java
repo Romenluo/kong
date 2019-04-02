@@ -2,13 +2,29 @@ package com.li.kong.dao;
 
 import com.li.kong.entity.Note;
 import com.li.kong.exception.DaoException;
+import com.li.kong.mapper.NoteMapper;
+import com.li.kong.utils.DataSource;
+import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
 public class NoteDao implements Dao<Note,Integer> {
+    private SqlSession session ;
+    NoteMapper noteMapper;
     @Override
     public Integer save(Note o) throws DaoException {
-        return null;
+        int count;
+        try{
+            session = new DataSource().init();
+            noteMapper = session.getMapper(NoteMapper.class);
+            count = noteMapper.save(o);
+            session.commit();
+        }catch (Exception e){
+            session.rollback();
+            throw new RuntimeException();
+        }
+        session.close();
+        return count;
     }
 
     @Override

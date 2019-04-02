@@ -29,14 +29,7 @@ public class Container {
     private RoleService rs = new RoleService();
     private UserService us = new UserService();
     private HttpSession session;
-    @RequestMapping("/") String home() {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("1689488576@qq.com");
-        message.setTo("romenluomen@sina.com");
-        message.setSubject("主题：简单邮件");
-        message.setText("你好我是测试内容");
-
-        mailSender.send(message);
+    @RequestMapping("/home") String home() {
         return"你好，世界!";
     }
 
@@ -113,36 +106,36 @@ public class Container {
         String email = (String)json.get("username");
         String password = (String)json.get("password");
         Message msg = new Message();
-
         User user = us.loadEmail(email);
         if(user==null){
             msg.setMsg("该用户不存在");
             msg.setCases("-1");
-            return msg;
+
         }else {
-
             Role role = rs.findId(user.getRoleId());
-
             if(role==null){
                 msg.setMsg("该用户不存在");
                 msg.setCases("-1");
-                return msg;
             }else {
                 String pass = StringHelper.encrypt( password , MessageDigestType.MD5, null );
                 if(pass.equals(user.getPassword())){
-                    session.setAttribute("user",user);
-                    user.setRole(role);
-                    msg.setMsg("登录成功");
-                    msg.setUser(user);
-                    msg.setCases("1");
-                    return msg;
+                    if("N".equals(user.getForbidden())){
+                        session.setAttribute("user",user);
+                        user.setRole(role);
+                        msg.setMsg("登录成功");
+                        msg.setUser(user);
+                        msg.setCases("1");
+                    }else {
+                        msg.setMsg("该用户已经被禁用");
+                        msg.setCases("-1");
+                    }
                 }else {
                     msg.setMsg("密码不正确");
                     msg.setCases("-1");
-                    return msg;
                 }
             }
         }
+        return msg;
     }
 
     /**
