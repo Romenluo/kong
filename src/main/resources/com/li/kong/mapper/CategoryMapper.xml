@@ -7,4 +7,11 @@
 <mapper namespace="com.li.kong.mapper.CategoryMapper">
     <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="Role">
     </insert>
+
+    <select id="findAll" resultType="Category" >
+        select id,name FROM t_category
+    </select>
+    <select id="find" resultType="Category" parameterType="String">
+        SELECT id , name FROM t_category WHERE name=#{name}
+    </select>
 </mapper>

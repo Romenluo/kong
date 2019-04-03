@@ -10,7 +10,7 @@ public class Message {
     private String msg;
     private User user;
     private List<User> list;
-
+    private List<Category> categoryList;
     public String getCases() {
         return cases;
     }
@@ -41,5 +41,13 @@ public class Message {
 
     public void setList(List<User> list) {
         this.list = list;
+    }
+
+    public List<Category> getCategoryList() {
+        return categoryList;
+    }
+
+    public void setCategoryList(List<Category> categoryList) {
+        this.categoryList = categoryList;
     }
 }
