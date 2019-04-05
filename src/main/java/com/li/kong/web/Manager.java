@@ -1,23 +1,18 @@
 package com.li.kong.web;
 
 import com.alibaba.fastjson.JSONObject;
-import com.li.kong.entity.Category;
-import com.li.kong.entity.Message;
-import com.li.kong.entity.Note;
-import com.li.kong.entity.User;
+import com.li.kong.entity.*;
 import com.li.kong.service.CategoryService;
+import com.li.kong.service.InformationService;
 import com.li.kong.service.NoteService;
 import com.li.kong.service.UserService;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -30,6 +25,7 @@ public class Manager {
     private UserService us = new UserService();
     private NoteService noteService = new NoteService();
     CategoryService categoryService = new CategoryService();
+    InformationService infoService = new InformationService();
     private HttpSession session;
 
     public @RequestMapping("findAllUser")
@@ -44,6 +40,7 @@ public class Manager {
 
     /**
      * 用户管理，对用户进行禁用或解除冻结
+     *
      * @param json
      * @param request
      * @return
@@ -76,51 +73,115 @@ public class Manager {
 
     /**
      * 查询所有的分类，并返回页面
+     *
      * @return
      */
     public @RequestMapping("findAllCategory")
     Message findAllCategory() {
         Message message = new Message();
-        try{
+        try {
             List<Category> list = categoryService.findAll();
             message.setCases("1");
             message.setMsg("获取类型成功");
             message.setCategoryList(list);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             message.setCases("-1");
             message.setMsg("获取类型失败");
         }
-        return  message;
+        return message;
     }
+
     /**
      * 保存文章
+     *
      * @return
      */
     public @RequestMapping("saveNote")
     Message saveNote(@RequestBody JSONObject json, HttpServletRequest request) {
         Message message = new Message();
-        String name = (String)json.get("category");
+        String name = (String) json.get("category");
         try {
             Category category = categoryService.find(name);
             Note note = new Note();
-            note.setTitle((String)json.get("title"));
-            note.setContent((String)json.get("content"));
+            note.setTitle((String) json.get("title"));
+            note.setContent((String) json.get("content"));
             note.setCategory(category);
             noteService.save(note);
             message.setCases("1");
             message.setMsg("保存成功");
-        }catch (Exception e){
+        } catch (Exception e) {
             message.setCases("-1");
             message.setMsg("保存失败");
         }
-        return  message;
+        return message;
     }
 
+    /**
+     * 保存实时资讯
+     *
+     * @param json 前端传过来的json数据
+     * @return
+     */
+    public @RequestMapping("saveInfo")
+    Message saveInfo(@RequestBody JSONObject json) {
+        Message message = new Message();
+        String title = (String) json.get("title");
+        String content = (String) json.get("content");
+        Information information = new Information();
+        information.setTitle(title);
+        information.setContent(content);
+        try {
+            infoService.save(information);
+            message.setCases("1");
+            message.setMsg("保存成功");
+        } catch (Exception e) {
+            message.setCases("-1");
+            message.setMsg("保存失败");
+        }
+        return message;
+    }
+
+    /**
+     * 获取所有的实时资讯
+     *
+     * @return
+     */
+    public @RequestMapping("findAllInfo")
+    List<Information> findAllInfo() {
+        List<Information> list;
+        try {
+            list = infoService.findAll();
+            return list;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * 删除实时资讯
+     *
+     * @param json
+     * @return
+     */
+    public @RequestMapping("deleteInfo")
+    Message deleteInfo(@RequestBody JSONObject json) {
+        Message message = new Message();
+        Integer id = (Integer)json.get("id");
+        boolean bb = infoService.deleteInfo(id);
+        if (bb == true) {
+            message.setCases("1");
+            message.setMsg("删除成功");
+        } else {
+            message.setCases("-1");
+            message.setMsg("删除失败");
+        }
+        return message;
+    }
 
     public @RequestMapping("uploadImage")
     String uploadImage() {
-        return  "上传成功";
+        return "上传成功";
     }
 
     @PostMapping(value = "/fileUpload")

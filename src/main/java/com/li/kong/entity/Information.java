@@ -1,7 +1,7 @@
 package com.li.kong.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * 实时资讯实体类

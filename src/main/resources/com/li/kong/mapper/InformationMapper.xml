@@ -5,6 +5,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.li.kong.mapper.InformationMapper">
-    <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="Role">
+
+    <resultMap id="citizenMap" type="Information">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="content" property="content"/>
+    </resultMap>
+    <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="Information">
+        INSERT INTO t_information (title,content,up_vote,down_vote,info_data) VALUES (#{title},#{content},#{upVote},#{downVote},#{infoDate})
     </insert>
+
+    <select id="findAll" resultType="Information" >
+        select id,title , content ,up_vote AS upVote, down_vote AS downVote , info_data AS infoDate FROM t_information
+    </select>
+    <delete id="delete" parameterType="Integer">
+        DELETE FROM t_information WHERE id = #{id}
+    </delete>
 </mapper>
