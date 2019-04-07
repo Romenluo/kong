@@ -1,9 +1,12 @@
 package com.li.kong.web;
 
 import com.alibaba.fastjson.JSONObject;
+import com.li.kong.entity.Information;
 import com.li.kong.entity.Message;
 import com.li.kong.entity.Role;
 import com.li.kong.entity.User;
+import com.li.kong.exception.ServiceException;
+import com.li.kong.service.InformationService;
 import com.li.kong.service.RoleService;
 import com.li.kong.service.UserService;
 import com.li.kong.utils.MessageDigestType;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -28,6 +32,8 @@ public class Container {
 
     private RoleService rs = new RoleService();
     private UserService us = new UserService();
+    InformationService infoService = new InformationService();
+
     private HttpSession session;
     @RequestMapping("/home") String home() {
         return"你好，世界!";
@@ -257,5 +263,22 @@ public class Container {
             message.setMsg("输入密码不正确");
             return message;
         }
+    }
+
+
+    public @RequestMapping("upVote") Information upVote(@RequestBody JSONObject json,HttpServletRequest request){
+        session = request.getSession();
+        int id = (Integer) json.get("id");
+        Information information;
+        try {
+            information = infoService.find(id);
+            information.setUpVote((Integer)json.get("upVote"));
+            information.setDownVote((Integer)json.get("downVote"));
+            infoService.update(information);
+            information = infoService.find(id);
+        }catch (Exception e){
+            throw new ServiceException(""+e);
+        }
+        return information;
     }
 }

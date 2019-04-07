@@ -10,6 +10,11 @@ import java.util.List;
 public class InformationService {
     InformationDao informationDao = new InformationDao();
 
+    /**
+     * 保存全部实时资讯
+     * @param information
+     * @return
+     */
     public int save(Information information){
         Date date = new Date();
         information.setDownVote(0);
@@ -24,6 +29,10 @@ public class InformationService {
        }
     }
 
+    /**
+     * 查询全部实时资讯
+     * @return
+     */
     public List<Information> findAll(){
         List<Information> list;
         try {
@@ -34,6 +43,11 @@ public class InformationService {
         return list;
     }
 
+    /**
+     * 删除实时资讯
+     * @param id
+     * @return
+     */
     public boolean deleteInfo(Integer id){
         try {
             informationDao.delete(id);
@@ -42,5 +56,35 @@ public class InformationService {
 //            throw new DaoException(""+e);
             return false;
         }
+    }
+
+    /**
+     * 更新实时资讯
+     * @param information
+     * @return
+     */
+    public boolean update(Information information){
+        boolean isUpdate;
+        try{
+            isUpdate = informationDao.update(information);
+        }catch (Exception e){
+            throw new DaoException(""+e);
+        }
+        return isUpdate;
+    }
+
+    /**
+     * 根据查询实时资讯
+     * @param id
+     * @return
+     */
+    public Information find(Integer id){
+        Information information;
+        try{
+            information = informationDao.find(id);
+        }catch (Exception e){
+            throw new DaoException(""+e);
+        }
+        return information;
     }
 }

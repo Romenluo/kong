@@ -6,16 +6,16 @@ import java.io.Serializable;
  * 图片实体类
  */
 public class Photos implements Serializable {
-    private Integer id;
+    private String id;
     private String title;
     private String imageUrl;//图片路径
     private Note note;//一对一，一张图片属于一篇文字
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

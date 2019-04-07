@@ -18,6 +18,29 @@
     <select id="findAll" resultType="Information" >
         select id,title , content ,up_vote AS upVote, down_vote AS downVote , info_data AS infoDate FROM t_information
     </select>
+
+    <select id="find" resultType="Information" parameterType="int">
+        select id,title , content ,up_vote AS upVote, down_vote AS downVote , info_data AS infoDate FROM t_information WHERE id = #{id}
+    </select>
+    <update id="update" parameterType="Information">
+        UPDATE t_information
+        <set>
+            <if test="title != null and title != ''">
+                title = #{title} ,
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content} ,
+            </if>
+            <if test="upVote != null and upVote != ''">
+                up_vote = #{upVote} ,
+            </if>
+            <if test="downVote != null and downVote != ''">
+                down_vote = #{downVote} ,
+            </if>
+            <trim suffixOverrides="," />
+        </set>
+        WHERE id = #{id}
+    </update>
     <delete id="delete" parameterType="Integer">
         DELETE FROM t_information WHERE id = #{id}
     </delete>

@@ -7,7 +7,7 @@ import java.util.List;
  * 地方特色介绍实体类
  */
 public class Note implements Serializable {
-    private Integer id;
+    private String id;
     private String title;
     private String content;
     private Integer upVote;
@@ -16,11 +16,11 @@ public class Note implements Serializable {
     private List<Photos> photos;//一对多，一篇文字有多张图片
     private List<Comment> commentList;//一对多，一篇文字有多条评论
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

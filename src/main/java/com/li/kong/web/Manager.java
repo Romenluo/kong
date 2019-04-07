@@ -2,10 +2,8 @@ package com.li.kong.web;
 
 import com.alibaba.fastjson.JSONObject;
 import com.li.kong.entity.*;
-import com.li.kong.service.CategoryService;
-import com.li.kong.service.InformationService;
-import com.li.kong.service.NoteService;
-import com.li.kong.service.UserService;
+import com.li.kong.service.*;
+import com.li.kong.utils.StringHelper;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +24,7 @@ public class Manager {
     private NoteService noteService = new NoteService();
     CategoryService categoryService = new CategoryService();
     InformationService infoService = new InformationService();
+    PhotosService photosService = new PhotosService();
     private HttpSession session;
 
     public @RequestMapping("findAllUser")
@@ -100,14 +99,24 @@ public class Manager {
     public @RequestMapping("saveNote")
     Message saveNote(@RequestBody JSONObject json, HttpServletRequest request) {
         Message message = new Message();
+        Photos photos = new Photos();
+
+        photos.setImageUrl((String)json.get("imageName"));
+        photos.setId(StringHelper.random());
+        photos.setTitle((String) json.get("title"));
+
+        String id = StringHelper.random();
         String name = (String) json.get("category");
         try {
             Category category = categoryService.find(name);
             Note note = new Note();
+            note.setId(id);
             note.setTitle((String) json.get("title"));
             note.setContent((String) json.get("content"));
             note.setCategory(category);
             noteService.save(note);
+            photos.setNote(note);
+            photosService.save(photos);
             message.setCases("1");
             message.setMsg("保存成功");
         } catch (Exception e) {

@@ -6,6 +6,6 @@
 
 <mapper namespace="com.li.kong.mapper.NoteMapper">
     <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="Note">
-      INSERT INTO t_note (title,content,up_vote,down_vote,category_id) VALUES (#{title},#{content},#{upVote},#{downVote},#{category.id})
+      INSERT INTO t_note (id,title,content,up_vote,down_vote,category_id) VALUES (#{id},#{title},#{content},#{upVote},#{downVote},#{category.id})
     </insert>
 </mapper>

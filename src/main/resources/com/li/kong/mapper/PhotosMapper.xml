@@ -5,6 +5,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.li.kong.mapper.PhotosMapper">
-    <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="Role">
+    <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="Photos">
+         INSERT INTO t_images (id,title,image_url,note_id) VALUES (#{id},#{title},#{imageUrl},#{note.id})
     </insert>
 </mapper>

@@ -45,12 +45,34 @@ public class InformationDao implements Dao<Information,Integer> {
 
     @Override
     public boolean update(Information information) throws DaoException {
-        return false;
+        int count;
+        try {
+            session = new DataSource().init();
+            mapper = session.getMapper(InformationMapper.class);
+            count = mapper.update(information);
+            session.commit();
+        }catch (Exception e){
+            session.rollback();
+            throw new RuntimeException(e);
+        }
+        if(count>=1){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     @Override
     public Information find(Integer id) throws DaoException {
-        return null;
+        Information information;
+        try{
+            session = new DataSource().init();
+            mapper = session.getMapper(InformationMapper.class);
+            information = mapper.find(id);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        return information;
     }
 
     @Override

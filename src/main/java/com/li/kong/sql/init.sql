@@ -54,7 +54,7 @@ INSERT INTO t_category VALUES(7,'本地特产');
 DROP TABLE IF EXISTS t_note;
 -- 文章表
 CREATE TABLE t_note(
-  id int PRIMARY KEY AUTO_INCREMENT COMMENT '简介id',
+  id VARCHAR(32) PRIMARY KEY COMMENT '简介id',
   title VARCHAR(255) NOT NULL COMMENT '标题',
   content TEXT COMMENT '内容',
   up_vote int default 0 comment '赞成' ,
@@ -66,10 +66,10 @@ CREATE TABLE t_note(
 DROP TABLE IF EXISTS t_images;
 -- 图片表
 CREATE TABLE t_images(
-  id int PRIMARY KEY AUTO_INCREMENT COMMENT '图片id',
+  id VARCHAR(32) PRIMARY KEY COMMENT '图片id',
   title VARCHAR(255) NOT NULL COMMENT '标题',
   image_url TEXT COMMENT '图片路径',
-  note_id int COMMENT '简介id',
+  note_id VARCHAR(32) COMMENT '简介id',
   FOREIGN KEY (note_id) REFERENCES t_note(id)
 );
 -- 6
@@ -79,7 +79,7 @@ CREATE TABLE t_comment(
   id INT PRIMARY KEY AUTO_INCREMENT COMMENT '评论id',
   content VARCHAR(1024) COMMENT '评论的内容',
   user_id int COMMENT '用户id',
-  note_id int COMMENT '简介id',
+  note_id VARCHAR(32) COMMENT '简介id',
   comment_date DATE COMMENT '评论时间',
   up_vote int default 0 COMMENT '赞成' ,
   down_vote int default 0 COMMENT '反对' ,
