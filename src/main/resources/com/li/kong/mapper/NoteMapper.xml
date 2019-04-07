@@ -8,4 +8,7 @@
     <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="Note">
       INSERT INTO t_note (id,title,content,up_vote,down_vote,category_id) VALUES (#{id},#{title},#{content},#{upVote},#{downVote},#{category.id})
     </insert>
+    <select id="findAll" resultType="Note" parameterType="int">
+        select id,title , content ,up_vote AS upVote, down_vote AS downVote,category_id AS categoryId FROM t_note WHERE category_id=#{categoryId}
+    </select>
 </mapper>

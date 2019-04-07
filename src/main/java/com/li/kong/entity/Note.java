@@ -12,6 +12,7 @@ public class Note implements Serializable {
     private String content;
     private Integer upVote;
     private Integer downVote;
+    private int categoryId;
     private Category category;//一对一，一篇文章对应一个类型
     private List<Photos> photos;//一对多，一篇文字有多张图片
     private List<Comment> commentList;//一对多，一篇文字有多条评论
@@ -22,6 +23,14 @@ public class Note implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getTitle() {

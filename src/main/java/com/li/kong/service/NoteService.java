@@ -4,6 +4,8 @@ import com.li.kong.dao.NoteDao;
 import com.li.kong.entity.Note;
 import com.li.kong.exception.DaoException;
 
+import java.util.List;
+
 public class NoteService {
     NoteDao nd = new NoteDao();
     public Boolean save(Note note){
@@ -14,5 +16,15 @@ public class NoteService {
             throw new DaoException(""+e);
             //return false;
         }
+    }
+
+    public List<Note> findAll(Integer categoryId){
+        List<Note> list;
+        try{
+            list = nd.findCategoryIdAll(categoryId);
+        }catch (Exception e){
+            throw new DaoException(""+e);
+        }
+        return  list;
     }
 }

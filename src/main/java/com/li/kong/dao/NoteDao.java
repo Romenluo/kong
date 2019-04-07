@@ -54,6 +54,27 @@ public class NoteDao implements Dao<Note,Integer> {
 
     @Override
     public List<Note> findAll() throws DaoException {
+        /*List<Note> list;
+        try{
+            session = new DataSource().init();
+            noteMapper = session.getMapper(NoteMapper.class);
+            list = noteMapper.findAll();
+        }catch (Exception e){
+            throw new RuntimeException();
+        }
+        session.close();*/
         return null;
+    }
+    public List<Note> findCategoryIdAll(Integer categoryId) throws DaoException {
+        List<Note> list;
+        try{
+            session = new DataSource().init();
+            noteMapper = session.getMapper(NoteMapper.class);
+            list = noteMapper.findAll(categoryId);
+        }catch (Exception e){
+            throw new RuntimeException();
+        }
+        session.close();
+        return list;
     }
 }
