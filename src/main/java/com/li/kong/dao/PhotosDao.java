@@ -42,6 +42,19 @@ public class PhotosDao implements Dao<Photos,Integer> {
         return null;
     }
 
+    public Photos find(String id) throws DaoException {
+        Photos photos;
+        try{
+            session = new DataSource().init();
+            mapper = session.getMapper(PhotosMapper.class);
+            photos = mapper.find(id);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        session.close();
+        return photos;
+    }
+
     @Override
     public Photos load(Photos photos) throws DaoException {
         return null;

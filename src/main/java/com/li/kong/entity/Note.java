@@ -14,9 +14,9 @@ public class Note implements Serializable {
     private Integer downVote;
     private int categoryId;
     private Category category;//一对一，一篇文章对应一个类型
-    private List<Photos> photos;//一对多，一篇文字有多张图片
+    private List<Photos> photosList;//一对多，一篇文字有多张图片
     private List<Comment> commentList;//一对多，一篇文字有多条评论
-
+    private Photos photos;
     public String getId() {
         return id;
     }
@@ -73,11 +73,19 @@ public class Note implements Serializable {
         this.category = category;
     }
 
-    public List<Photos> getPhotos() {
+    public List<Photos> getPhotosList() {
+        return photosList;
+    }
+
+    public void setPhotosList(List<Photos> photosList) {
+        this.photosList = photosList;
+    }
+
+    public Photos getPhotos() {
         return photos;
     }
 
-    public void setPhotos(List<Photos> photos) {
+    public void setPhotos(Photos photos) {
         this.photos = photos;
     }
 

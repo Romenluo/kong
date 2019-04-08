@@ -8,4 +8,7 @@
     <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="Photos">
          INSERT INTO t_images (id,title,image_url,note_id) VALUES (#{id},#{title},#{imageUrl},#{note.id})
     </insert>
+    <select id="find" resultType="Photos" parameterType="String">
+        SELECT id , title,image_url AS imageUrl FROM t_images WHERE note_id=#{id}
+    </select>
 </mapper>

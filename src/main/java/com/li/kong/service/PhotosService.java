@@ -15,4 +15,14 @@ public class PhotosService {
        }
         return count;
     }
+
+    public Photos find(String id){
+        Photos photos;
+        try {
+            photos = pd.find(id);
+        }catch (Exception e){
+            throw new DaoException(""+e);
+        }
+        return  photos;
+    }
 }

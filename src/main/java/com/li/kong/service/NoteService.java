@@ -10,6 +10,8 @@ public class NoteService {
     NoteDao nd = new NoteDao();
     public Boolean save(Note note){
         try {
+            note.setUpVote(0);
+            note.setDownVote(0);
             nd.save(note);
             return true;
         }catch (Exception e){
@@ -18,7 +20,7 @@ public class NoteService {
         }
     }
 
-    public List<Note> findAll(Integer categoryId){
+    public List<Note> findCategoryAll(Integer categoryId){
         List<Note> list;
         try{
             list = nd.findCategoryIdAll(categoryId);
