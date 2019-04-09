@@ -34,12 +34,39 @@ public class NoteDao implements Dao<Note,Integer> {
 
     @Override
     public boolean update(Note note) throws DaoException {
-        return false;
+        int count;
+        try {
+            session = new DataSource().init();
+            noteMapper = session.getMapper(NoteMapper.class);
+            count = noteMapper.update(note);
+            session.commit();
+        }catch (Exception e){
+            session.rollback();
+            throw new RuntimeException(e);
+        }
+        if(count>=1){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     @Override
     public Note find(Integer id) throws DaoException {
         return null;
+    }
+
+    public Note find(String id) throws DaoException {
+        Note note;
+        try{
+            session = new DataSource().init();
+            noteMapper = session.getMapper(NoteMapper.class);
+            note = noteMapper.find(id);
+        }catch (Exception e){
+            throw new RuntimeException();
+        }
+        session.close();
+        return note;
     }
 
     @Override

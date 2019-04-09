@@ -48,4 +48,8 @@
         select id,email , password ,pet_name AS petName, qq , forbidden,role_id AS roleId FROM t_user
     </select>
 
+    <select id="loadUser" resultType="User" parameterType="int">
+        SELECT id , email , password ,pet_name AS petName, qq , forbidden,role_id AS roleId FROM t_user WHERE id=#{id}
+    </select>
+
 </mapper>

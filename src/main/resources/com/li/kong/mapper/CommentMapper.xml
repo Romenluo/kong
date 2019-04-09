@@ -5,6 +5,32 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.li.kong.mapper.CommentMapper">
-    <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="Role">
+    <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="Comment">
+      INSERT INTO t_comment (content,user_id,note_id,comment_date,up_vote,down_vote) VALUES (#{content},#{user.id},#{note.id},#{commentDate},#{upVote},#{downVote})
     </insert>
+
+    <select id="findNote" resultType="Comment" parameterType="String">
+        SELECT id , content,user_id As userId,note_id AS NoteId,comment_date AS commentDate,up_vote AS upVote ,down_vote AS downVote FROM t_comment WHERE note_id=#{id}
+    </select>
+
+    <select id="find" resultType="Comment" parameterType="int">
+        SELECT id , content,user_id As userId,note_id AS NoteId,comment_date AS commentDate,up_vote AS upVote ,down_vote AS downVote FROM t_comment WHERE id=#{id}
+    </select>
+
+    <update id="update" parameterType="Comment">
+        UPDATE t_comment
+        <set>
+            <if test="content != null and content != ''">
+                content = #{content} ,
+            </if>
+            <if test="upVote != null and upVote != ''">
+                up_vote = #{upVote} ,
+            </if>
+            <if test="downVote != null and downVote != ''">
+                down_vote = #{downVote} ,
+            </if>
+            <trim suffixOverrides="," />
+        </set>
+        WHERE id = #{id}
+    </update>
 </mapper>

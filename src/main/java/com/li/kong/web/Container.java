@@ -266,6 +266,12 @@ public class Container {
     }
 
 
+    /**
+     * 实时资讯点赞
+     * @param json
+     * @param request
+     * @return
+     */
     public @RequestMapping("upVote") Information upVote(@RequestBody JSONObject json,HttpServletRequest request){
         session = request.getSession();
         int id = (Integer) json.get("id");

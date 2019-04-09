@@ -11,4 +11,5 @@ public interface UserMapper {
     int updatePassword(User user);
     List<User> listUser();
     int updateForbidden(User user);
+    User loadUser(Integer id);
 }

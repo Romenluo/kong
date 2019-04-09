@@ -1,6 +1,7 @@
 package com.li.kong.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 评论实例
@@ -8,11 +9,13 @@ import java.io.Serializable;
 public class Comment implements Serializable {
     private Integer id;
     private String content;
+    private Integer userId;
+    private String NoteId;
     private User user;//一对一。一条评论由一个用户发表
     private Note note;//一对一。一条评论属于一篇文章
     private Integer upVote;
     private Integer downVote;
-
+    private Date commentDate;
     public Integer getId() {
         return id;
     }
@@ -59,5 +62,29 @@ public class Comment implements Serializable {
 
     public void setDownVote(Integer downVote) {
         this.downVote = downVote;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getNoteId() {
+        return NoteId;
+    }
+
+    public void setNoteId(String noteId) {
+        NoteId = noteId;
+    }
+
+    public Date getCommentDate() {
+        return commentDate;
+    }
+
+    public void setCommentDate(Date commentDate) {
+        this.commentDate = commentDate;
     }
 }

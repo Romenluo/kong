@@ -11,4 +11,31 @@
     <select id="findAll" resultType="Note" parameterType="int">
         select id,title , content ,up_vote AS upVote, down_vote AS downVote,category_id AS categoryId FROM t_note WHERE category_id=#{categoryId}
     </select>
+
+    <select id="find" resultType="Note" parameterType="String">
+        select id,title , content ,up_vote AS upVote, down_vote AS downVote,category_id AS categoryId FROM t_note WHERE id=#{id}
+    </select>
+
+    <update id="update" parameterType="Note">
+        UPDATE t_note
+        <set>
+            <if test="title != null and title != ''">
+                title = #{title} ,
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content} ,
+            </if>
+            <if test="upVote != null and upVote != ''">
+                up_vote = #{upVote} ,
+            </if>
+            <if test="downVote != null and downVote != ''">
+                down_vote = #{downVote} ,
+            </if>
+            <if test="categoryId != null and categoryId != ''">
+                category_id = #{categoryId} ,
+            </if>
+            <trim suffixOverrides="," />
+        </set>
+        WHERE id = #{id}
+    </update>
 </mapper>

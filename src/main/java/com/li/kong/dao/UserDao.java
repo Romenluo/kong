@@ -132,6 +132,25 @@ public class UserDao implements Dao<User,Integer> {
         return user;
     }
 
+    /**
+     * 根据用户id查询用户
+     * @param id
+     * @return
+     * @throws DaoException
+     */
+    public User loadId(Integer id) throws DaoException{
+        User user;
+        try{
+            session = new DataSource().init();
+            mapper = session.getMapper(UserMapper.class);
+            user = mapper.loadUser(id);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        session.close();
+        return user;
+    }
+
     @Override
     public List<User> loadList(User user) throws DaoException {
         return null;
