@@ -29,7 +29,20 @@ public class CommentDao implements Dao<Comment,Integer> {
 
     @Override
     public boolean delete(Integer id) throws DaoException {
-        return false;
+        int count;
+        try {
+            session = new DataSource().init();
+            mapper = session.getMapper(CommentMapper.class);
+            count = mapper.delete(id);
+            session.commit();
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        if(count>=1){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     /**

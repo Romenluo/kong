@@ -26,6 +26,7 @@ public class Manager {
     CategoryService categoryService = new CategoryService();
     InformationService infoService = new InformationService();
     PhotosService photosService = new PhotosService();
+    CommentService commentService = new CommentService();
     private HttpSession session;
 
     public @RequestMapping("findAllUser")
@@ -263,6 +264,29 @@ public class Manager {
         }catch (Exception e){
             message.setCases("-1");
             message.setMsg("删除失败");
+        }
+        return message;
+    }
+
+    /**
+     * 删除评论
+     * @param json
+     * @return
+     */
+    public @RequestMapping("deleteComment")
+    Message deleteComment(@RequestBody JSONObject json) {
+        Message message = new Message();
+        Integer id = (Integer) json.get("id");
+        String noteId = (String) json.get("noteId");
+        try {
+            commentService.delete(id);
+            List<Comment> list = commentService.findNote(noteId);
+            message.setCommentList(list);
+            message.setCases("1");
+            message.setMsg("删除评论成功");
+        }catch (Exception e){
+            message.setCases("-1");
+            message.setMsg("删除评论失败");
         }
         return message;
     }

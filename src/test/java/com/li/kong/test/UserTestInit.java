@@ -15,10 +15,10 @@ public class UserTestInit {
         UserService us = new UserService();
         User user = new User();
         Role role = new Role();
-        role.setId(1);
-        user.setEmail("kong@li.com");
+        role.setId(2);
+        user.setEmail("luo@men.com");
         user.setPassword("123456");
-        user.setPetName("kong");
+        user.setPetName("menmen");
         user.setQq("123456789");
         user.setForbidden("N");
         user.setRole(role);

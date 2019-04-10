@@ -10,4 +10,5 @@ public interface CommentMapper {
     Comment find(Integer id);
     int update(Comment comment);
     int deleteNote(String noteId);
+    int delete(int id);
 }

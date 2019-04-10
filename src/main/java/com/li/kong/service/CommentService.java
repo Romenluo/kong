@@ -85,4 +85,18 @@ public class CommentService {
         }
         return true;
     }
+
+    /**
+     * 删除评论
+     * @param id
+     * @return
+     */
+    public boolean delete(Integer id){
+        try {
+            cd.delete(id);
+        }catch (Exception e){
+            throw new DaoException(""+e);
+        }
+        return true;
+    }
 }
