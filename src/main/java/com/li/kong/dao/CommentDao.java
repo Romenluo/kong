@@ -32,6 +32,29 @@ public class CommentDao implements Dao<Comment,Integer> {
         return false;
     }
 
+    /**
+     * 根据文章id删除评论
+     * @param id
+     * @return
+     * @throws DaoException
+     */
+    public boolean deleteNote(String id) throws  DaoException{
+        int count;
+        try {
+            session = new DataSource().init();
+            mapper = session.getMapper(CommentMapper.class);
+            count = mapper.deleteNote(id);
+            session.commit();
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        if(count>=1){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
     @Override
     public boolean update(Comment comment) throws DaoException {
         int count;

@@ -2,6 +2,7 @@ package com.li.kong.web;
 
 import com.alibaba.fastjson.JSONObject;
 import com.li.kong.entity.*;
+import com.li.kong.exception.ServiceException;
 import com.li.kong.service.*;
 import com.li.kong.utils.StringHelper;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -182,6 +183,84 @@ public class Manager {
             message.setCases("1");
             message.setMsg("删除成功");
         } else {
+            message.setCases("-1");
+            message.setMsg("删除失败");
+        }
+        return message;
+    }
+
+    /**
+     * 修改实时资讯
+     * @param json
+     * @param request
+     * @return
+     */
+    public @RequestMapping("updateInfo") Message updateInfo(@RequestBody JSONObject json,HttpServletRequest request){
+        session = request.getSession();
+        Message message = new Message();
+        int id = (Integer) json.get("id");
+        String content = (String)json.get("content");
+        Information information;
+        try {
+            information = infoService.find(id);
+            information.setTitle((String)json.get("title"));
+            information.setContent(content);
+            infoService.update(information);
+            message.setCases("1");
+            message.setMsg("修改成功");
+        }catch (Exception e){
+            message.setCases("1");
+            message.setMsg("修改失败");
+            throw new ServiceException(""+e);
+        }
+        return message;
+    }
+
+    /**
+     * 修改文章内容
+     * @param json
+     * @param request
+     * @return
+     */
+    public @RequestMapping("updateNote") Message updateNote(@RequestBody JSONObject json,HttpServletRequest request){
+        session = request.getSession();
+        Message message = new Message();
+        String id = (String) json.get("id");
+        String title = (String)json.get("title");
+        String name = (String)json.get("categoryValue");
+        String content = (String)json.get("content");
+        try {
+            Note note = noteService.find(id);
+            note.setTitle(title);
+            note.setContent(content);
+            Photos photos = photosService.find(id);
+            photos.setTitle(title);
+            photos.setImageUrl((String)json.get("imageName"));
+            photos.setNote(note);
+            //查询类型
+            Category category = categoryService.find(name);
+           note.setCategoryId(category.getId());
+            noteService.update(note);
+            photosService.update(photos);
+            message.setCases("1");
+            message.setMsg("修改成功");
+        }catch (Exception e){
+            message.setCases("1");
+            message.setMsg("修改失败");
+            throw new ServiceException(""+e);
+        }
+        return message;
+    }
+
+    public @RequestMapping("deleteNote")
+    Message deleteNote(@RequestBody JSONObject json) {
+        Message message = new Message();
+        String id = (String)json.get("id");
+        try {
+            noteService.delete(id);
+            message.setCases("1");
+            message.setMsg("删除成功");
+        }catch (Exception e){
             message.setCases("-1");
             message.setMsg("删除失败");
         }

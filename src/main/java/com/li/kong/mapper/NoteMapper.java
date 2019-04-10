@@ -9,4 +9,5 @@ public interface NoteMapper {
     List<Note> findAll(Integer categoryId);
     int update(Note note);
     Note find(String id);
+    int delete(String id);
 }

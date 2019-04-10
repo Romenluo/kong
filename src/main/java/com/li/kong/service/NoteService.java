@@ -8,7 +8,8 @@ import java.util.List;
 
 public class NoteService {
     NoteDao nd = new NoteDao();
-
+    CommentService cs = new CommentService();
+    PhotosService ps = new PhotosService();
     /**
      * 保存文章
      * @param note
@@ -68,5 +69,21 @@ public class NoteService {
             throw new DaoException(""+e);
         }
         return  list;
+    }
+
+    /**
+     * 根据文章id删除文章
+     * @param id
+     * @return
+     */
+    public boolean delete(String id){
+        try {
+            cs.delete(id);
+            ps.delete(id);
+            nd.delete(id);
+        }catch (Exception e){
+            throw new DaoException(""+e);
+        }
+        return true;
     }
 }

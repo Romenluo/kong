@@ -11,4 +11,21 @@
     <select id="find" resultType="Photos" parameterType="String">
         SELECT id , title,image_url AS imageUrl FROM t_images WHERE note_id=#{id}
     </select>
+    <update id="update" parameterType="Photos">
+        UPDATE t_images
+        <set>
+            <if test="title != null and title != ''">
+                title = #{title} ,
+            </if>
+            <if test="imageUrl != null and imageUrl != ''">
+                image_url = #{imageUrl} ,
+            </if>
+            <trim suffixOverrides="," />
+        </set>
+        WHERE note_id = #{note.id}
+    </update>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM t_images WHERE note_id = #{id}
+    </delete>
 </mapper>

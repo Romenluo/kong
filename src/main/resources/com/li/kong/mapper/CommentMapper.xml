@@ -33,4 +33,8 @@
         </set>
         WHERE id = #{id}
     </update>
+
+    <delete id="deleteNote" parameterType="String">
+        DELETE FROM t_comment WHERE note_id = #{noteId}
+    </delete>
 </mapper>

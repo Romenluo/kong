@@ -71,4 +71,18 @@ public class CommentService {
         }
         return isUpdate;
     }
+
+    /**
+     * 根据文章ID删除文章
+     * @param id
+     * @return
+     */
+    public boolean delete(String id){
+        try {
+            cd.deleteNote(id);
+        }catch (Exception e){
+            throw new DaoException(""+e);
+        }
+        return true;
+    }
 }

@@ -38,4 +38,8 @@
         </set>
         WHERE id = #{id}
     </update>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM t_note WHERE id = #{id}
+    </delete>
 </mapper>

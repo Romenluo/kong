@@ -32,6 +32,29 @@ public class NoteDao implements Dao<Note,Integer> {
         return false;
     }
 
+    /**
+     * 根据文章ID删除文章
+     * @param id
+     * @return
+     * @throws DaoException
+     */
+    public boolean delete(String id) throws DaoException {
+        int count;
+        try {
+            session = new DataSource().init();
+            noteMapper = session.getMapper(NoteMapper.class);
+            count = noteMapper.delete(id);
+            session.commit();
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        if(count>=1){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
     @Override
     public boolean update(Note note) throws DaoException {
         int count;
