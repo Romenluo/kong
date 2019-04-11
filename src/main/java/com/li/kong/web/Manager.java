@@ -155,7 +155,6 @@ public class Manager {
 
     /**
      * 获取所有的实时资讯
-     *
      * @return
      */
     public @RequestMapping("findAllInfo")
