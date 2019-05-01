@@ -16,9 +16,9 @@ public class UserTestInit {
         User user = new User();
         Role role = new Role();
         role.setId(2);
-        user.setEmail("luo@men.com");
+        user.setEmail("kong@men.com");
         user.setPassword("123456");
-        user.setPetName("menmen");
+        user.setPetName("kongli");
         user.setQq("123456789");
         user.setForbidden("N");
         user.setRole(role);
